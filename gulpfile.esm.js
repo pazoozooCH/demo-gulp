@@ -1,3 +1,5 @@
+import { transpile } from './tasks/transpile';
+
 const gulp = require('gulp');
 const { spawn } = require('child_process');
 
@@ -26,6 +28,7 @@ function watch() {
 }
 
 module.exports = {
+  transpile,
   run: startServer,
   'run:watch': watch,
   default: startServer

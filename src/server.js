@@ -1,9 +1,12 @@
 import {val} from './es6-module';
+import {getObj} from './typescript-code';
+
 const getHello = require('./get-hello').default;
 
 console.log('Starting server');
 console.log('Get Hello:', getHello("World"));
 console.log('ES6 import:', val);
+console.log('TypeScript Code:', getObj('John', 21));
 
 require('./object-rest-spread');
 
