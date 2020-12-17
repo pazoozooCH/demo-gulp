@@ -1,4 +1,5 @@
 const { series } = require('gulp');
+const { spawn } = require('child_process');
 
 // The `clean` function is not exported so it can be considered a private task.
 // It can still be used within the `series()` composition.
@@ -16,5 +17,9 @@ function build(cb) {
   cb();
 }
 
+function run() {
+    return spawn('node', ['src/server.js'], {stdio: 'inherit'});
+}
+
 exports.build = build;
-exports.default = series(clean, build);
+exports.default = series(clean, build, run);
