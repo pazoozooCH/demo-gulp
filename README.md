@@ -15,10 +15,12 @@ This project was set up using:
 To run it:
 
 - `npm install`
-- `gulp`
+- Run in regular mode: `gulp`
+- Run in watch mode (restart server on file change): `gulp run:watch`
 
 ## Additional commands
 
 - Show a tree of gulp tasks: `gulp --tasks`
 - Run a specific task: `gulp [taskname]`, e.g. `gulp build`
   - Default task is `default`
+  

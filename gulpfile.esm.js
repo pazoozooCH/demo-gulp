@@ -1,18 +1,32 @@
-import { val } from './tasks/es6-module';
+const gulp = require('gulp');
+const { spawn } = require('child_process');
 
-const { series } = require('gulp');
-const { run } = require('./tasks/run');
-const { clean } = require('./tasks/clean');
+let node;
 
-console.log('ES6 import:', val);
+async function startServer() {
+  if (node) node.kill();
+  node = await spawn("node", ["-r", "esm", "./src/server.js"], { stdio: "inherit" });
 
-// The `build` function is exported so it is public and can be run with the `gulp` command.
-// It can also be used within the `series()` composition.
-function build(cb) {
-  // body omitted
-  console.log('#Build runs');
-  cb();
+  node.on("close", function (code) {
+    if(code === 8) {
+      console.log("Error detected, waiting for changes...");
+    }
+  });
 }
 
-exports.build = build;
-exports.default = series(clean, build, run);
+function watch() {
+  // Start the server, if a change is detected restart it
+  gulp.watch(
+    ["src/**/*", "src/server.js"],
+    {
+      queue: false,
+      ignoreInitial: false // Execute task on startup 
+    },
+    startServer);
+}
+
+module.exports = {
+  run: startServer,
+  'run:watch': watch,
+  default: startServer
+}
