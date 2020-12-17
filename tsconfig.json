@@ -1,7 +1,11 @@
 {
-    "files": ["src/main.ts"],
+    "files": ["src/**/*.js", "src/**/*.ts"],
     "compilerOptions": {
+      "allowJs": true,
       "noImplicitAny": true,
-      "target": "es5"
-    }
-  }
+      "lib": ["es2018", "dom"],
+      "module": "commonjs",
+      "target": "es2018",
+      "outDir": "dist"
+    },
+}
