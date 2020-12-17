@@ -1,7 +1,9 @@
+import {val} from './es6-module';
 const getHello = require('./get-hello').default;
 
 console.log('Starting server');
 console.log('Get Hello:', getHello("World"));
+console.log('ES6 import:', val);
 
 require('./object-rest-spread');
 
