@@ -1,6 +1,9 @@
 const getHello = require('./get-hello').default;
+
 console.log('Starting server');
 console.log('Get Hello:', getHello("World"));
+
+require('./object-rest-spread');
 
 setInterval(() => console.log(`Hello from the server`, new Date()), 1000);
 
