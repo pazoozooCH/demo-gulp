@@ -1,13 +1,15 @@
+import { copyJs } from './tasks/copy-js';
 import { transpile, transpileWatch } from './tasks/transpile';
 
 const gulp = require('gulp');
+const del = require('del');
 const { spawn } = require('child_process');
 
 let node;
 
 async function startServer() {
   if (node) node.kill();
-  node = await spawn("node", ["-r", "esm", "./src/server.js"], { stdio: "inherit" });
+  node = await spawn("node", ["-r", "esm", "./dist/server.js"], { stdio: "inherit" });
 
   node.on("close", function (code) {
     if(code === 8) {
@@ -19,18 +21,28 @@ async function startServer() {
 function watch() {
   // Start the server, if a change is detected restart it
   gulp.watch(
-    ["src/**/*", "src/server.js"],
+    ["src/**"],
     {
       queue: false,
       ignoreInitial: false // Execute task on startup 
     },
-    startServer);
+    // TODO build / restart / whatever...
+    saySomething);
+    // startServer);
 }
 
+function saySomething(cb) {
+  console.log('##something');
+  cb();
+}
+
+const build = gulp.parallel(copyJs, transpile);
+
 module.exports = {
+  clean: () => del('dist'),
+  build,
   transpile,
-  'transpile:watch': transpileWatch,
   run: startServer,
-  'run:watch': gulp.series(transpileWatch, watch),
+  'run:watch': gulp.series(build, startServer, watch),
   default: startServer
 }

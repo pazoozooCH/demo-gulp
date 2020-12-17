@@ -29,3 +29,4 @@ To run it:
 
 - TypeScript target: See <https://stackoverflow.com/questions/51716406/typescript-tsconfig-settings-for-node-js-10>
   - Node 10 supports 100% of es2018
+- TypeScript lib: `dom` added to support `console`
